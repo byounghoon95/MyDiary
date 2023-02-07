@@ -1,0 +1,33 @@
+Spring:
+  #  swagger ??? ?? ? ?? ??
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+  profiles:
+    active: local
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/Diary?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: tiger
+  jpa:
+    database: mysql   # ?? ?? ??
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect # ?? ?? ??
+    hibernate:
+      ddl-auto: create
+
+    properties:
+      hibernate:
+        #        show_sql: true
+        format_sql: true
+        default_batch_fetch_size: 100
+        use_sql_comments: true #querydsl?? ? ???? jpql ??
+logging:
+  level:
+    org.hibernate.SQL: debug
+#    org.hibername.type:
+jwt:
+  secret: hello.world.ee.ff
+  expired-ms: 86400
+server:
+  port: 8083
