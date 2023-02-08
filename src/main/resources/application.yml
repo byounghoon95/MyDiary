@@ -1,5 +1,5 @@
 Spring:
-  #  swagger ??? ?? ? ?? ??
+  #  swagger 의존성 추가 후 서버 에러
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
@@ -11,8 +11,8 @@ Spring:
     username: root
     password: tiger
   jpa:
-    database: mysql   # ?? ?? ??
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect # ?? ?? ??
+    database: mysql   # 추가 해준 부분
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect # 추가 해준 부분
     hibernate:
       ddl-auto: create
 
@@ -21,7 +21,7 @@ Spring:
         #        show_sql: true
         format_sql: true
         default_batch_fetch_size: 100
-        use_sql_comments: true #querydsl?? ? ???? jpql ??
+        use_sql_comments: true #querydsl실행 시 실행되는 jpql 조회
 logging:
   level:
     org.hibernate.SQL: debug
