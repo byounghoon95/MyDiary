@@ -1,7 +1,7 @@
 package com.example.mydiary.dto;
 
 
-import com.example.diary.entity.MemberEntity;
+import com.example.mydiary.entity.MemberEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
