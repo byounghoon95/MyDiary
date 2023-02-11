@@ -26,6 +26,5 @@ public class MemberJoinDto {
 
 /**
  * cannot deserialize from object value 에러 해결
- * https://blogshine.tistory.com/445
  * ObjectMapper 내부에 기본생성자가 없으면 역직렬화를 막음
  */
