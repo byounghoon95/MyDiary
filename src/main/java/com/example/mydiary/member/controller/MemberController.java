@@ -3,8 +3,11 @@ package com.example.mydiary.member.controller;
 import com.example.mydiary.common.CodeEnum;
 import com.example.mydiary.dto.MemberJoinDto;
 import com.example.mydiary.dto.MemberLoginDto;
+import com.example.mydiary.dto.TokenDto;
+import com.example.mydiary.dto.TokenRequestDto;
 import com.example.mydiary.member.service.MemberService;
 import com.example.mydiary.response.CommonResponse;
+import com.example.mydiary.utils.JwtTokenUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.Getter;
@@ -23,7 +26,6 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class MemberController {
     private final MemberService memberService;
-
     @ApiOperation(value = "회원가입", notes = "회원의 정보를 입력받아 등록한다")
     @PostMapping("/join")
     public CommonResponse join(@RequestBody MemberJoinDto dto) {
@@ -33,8 +35,14 @@ public class MemberController {
     @ApiOperation(value = "로그인", notes = "회원의 정보로 로그인하면 JWT를 발급한다")
     @PostMapping("/login")
     public CommonResponse login(@RequestBody MemberLoginDto dto) {
-        log.info("로그인 계정 : " + dto);
-        String token = memberService.login(dto);
+        return new CommonResponse(CodeEnum.SUCCESS, memberService.login(dto));
+    }
+
+    @ApiOperation(value = "엑세스,리프레시 토큰 재발급", notes = "access 토큰 만료 시, 회원 검증 후 리프레시 토큰을 검증해서 엑세스 토큰과 리프레시 토큰 재발급")
+    @PostMapping("/reissue")
+    public CommonResponse jwtReissue(@RequestBody TokenRequestDto tokenRequestDto, @RequestBody MemberLoginDto memberLoginDto) {
+        TokenDto token = memberService.reissue(tokenRequestDto, memberLoginDto);
         return new CommonResponse(CodeEnum.SUCCESS, token);
     }
+
 }

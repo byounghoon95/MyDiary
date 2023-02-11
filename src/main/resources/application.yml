@@ -12,9 +12,10 @@ Spring:
     password: tiger
   jpa:
     database: mysql   # 추가 해준 부분
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect # 추가 해준 부분
+    database-platform: org.hibernate.dialect.MySQL8Dialect # 추가 해준 부분
     hibernate:
-      ddl-auto: none
+      ddl-auto: create
+#      ddl-auto: none
 
     properties:
       hibernate:
@@ -29,6 +30,7 @@ logging:
 jwt:
   token:
     secret: 123qweasd345dfdae
-    expired-ms: 86400
+    expired-ms: 3600000 # 1시간
+    refresh-ms: 1209600000 # 24시간
 server:
   port: 8083
