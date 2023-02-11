@@ -14,7 +14,7 @@ Spring:
     database: mysql   # 추가 해준 부분
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect # 추가 해준 부분
     hibernate:
-      ddl-auto: create
+      ddl-auto: none
 
     properties:
       hibernate:
@@ -27,7 +27,8 @@ logging:
     org.hibernate.SQL: debug
 #    org.hibername.type:
 jwt:
-  secret: hello.world.ee.ff
-  expired-ms: 86400
+  token:
+    secret: 123qweasd345dfdae
+    expired-ms: 86400
 server:
   port: 8083
