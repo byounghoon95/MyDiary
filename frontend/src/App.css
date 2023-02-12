@@ -136,6 +136,12 @@ header .head_text{
     justify-content: center;
 }
 
+header .head_top{
+    width: 80%;
+    font-size: 25px;
+    justify-content: center;
+}
+
 header .head_btn_left{
     width: 25%;
     justify-content: start;
