@@ -32,7 +32,7 @@ const Login = () => {
 
     // accessToken 만료하기 1분 전에 로그인 연장
     setTimeout(onMakeRefreshToken, expireTime - 60000);
-    navigate("/home");
+    navigate("/home",{replace:true});
   }
 
   const onLoginError = () => {
