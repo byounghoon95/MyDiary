@@ -20,7 +20,7 @@ const Login = () => {
     password: account.password,
   };
 
-  const join = () => {
+  const moveJoin = () => {
     navigate("/join");
   };
 
@@ -78,7 +78,7 @@ const Login = () => {
         {/*</label>*/}
         <input type="submit" value="Login" />
         <div className="login-box">
-          <span onClick={join}>회원가입</span><span> | </span><span>아이디 찾기</span><span> | </span><span>비밀번호 찾기</span>
+          <span onClick={moveJoin}>회원가입</span><span> | </span><span>아이디 찾기</span><span> | </span><span>비밀번호 찾기</span>
         </div>
       </form>
 
