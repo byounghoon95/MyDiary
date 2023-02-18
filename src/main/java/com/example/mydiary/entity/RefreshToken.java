@@ -6,26 +6,23 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@NoArgsConstructor
 @Getter
-@Table(name = "reftoken")
+@NoArgsConstructor
+@Table(name = "refresh_token")
 @Entity
 public class RefreshToken {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    @Column(name = "token_key")
-    private Long key;
-    private String token;
+    @Column(name = "rt_key")
+    private String key;
 
-    public RefreshToken updateToken(String token) {
-        this.token = token;
-        return this;
+    @Column(name = "rt_value")
+    private String value;
+    public void updateValue(String token) {
+        this.value = token;
     }
-
     @Builder
-    public RefreshToken(Long key, String token) {
+    public RefreshToken(String key, String value) {
         this.key = key;
-        this.token = token;
+        this.value = value;
     }
 }
