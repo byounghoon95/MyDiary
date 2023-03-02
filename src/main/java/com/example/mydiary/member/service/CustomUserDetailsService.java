@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,19 +45,15 @@ public class CustomUserDetailsService implements UserDetailsService {
     // DB 에 User 값이 존재한다면 UserDetails 객체로 만들어서 리턴
     private UserDetails createUserDetails(MemberEntity member) {
 
-        // Collections<? extends GrantedAuthority>
-        List<SimpleGrantedAuthority> authList = member.getAuthorities()
-                .stream()
-                .map(Authority::getAuthorityName)
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
 
-        authList.forEach(o-> log.debug("authList -> {}",o.getAuthority()));
+        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(member.getAuthority().getAuthorityName());
+        log.debug("authority : {}",authority);
 
         return new User(
                 member.getMemId(),
                 member.getPassword(),
-                authList
+                Collections.singleton(authority)
+//              authList
         );
     }
 }

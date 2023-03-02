@@ -43,14 +43,12 @@ public class TokenProvider {
         this.key = Keys.hmacShaKeyFor(keyBytes);
     }
 
-    public String createToken(String memId, Set<Authority> auth, long tokenValid) {
+    public String createToken(String memId, Authority auth, long tokenValid) {
         Claims claims = Jwts.claims().setSubject(memId);
 
         // ROLE_USER,ROLE_ADMIN
         claims.put(AUTHORITIES_KEY,
-                auth.stream()
-                        .map(Authority::getAuthorityName)
-                        .collect(Collectors.joining(","))
+                auth
         );
 
         return Jwts.builder()
@@ -61,10 +59,10 @@ public class TokenProvider {
                 .compact();
     }
 
-    public String createAccessToken(String memId,Set<Authority> auth) {
+    public String createAccessToken(String memId,Authority auth) {
         return this.createToken(memId,auth,ACCESS_TOKEN_EXPIRE_TIME);
     }
-    public String createRefreshToken(String memId,Set<Authority> auth) {
+    public String createRefreshToken(String memId, Authority auth) {
         return this.createToken(memId,auth,REFRESH_TOKEN_EXPIRE_TIME);
     }
     //토큰 값을 파싱하여 클레임에 담긴 memId 값을 가져온다.

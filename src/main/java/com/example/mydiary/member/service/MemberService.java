@@ -47,11 +47,10 @@ public class MemberService {
         // DB 에서 ROLE_USER를 찾아서 권한으로 추가
         Authority authority = authorityRepository
                 .findByAuthorityName(MemberAuth.ROLE_USER).orElseThrow(()->new CustomException(CodeEnum.NOT_FOUND_AUTHORITY,"권한이 없습니다"));
-        Set<Authority> set = new HashSet<>();
-        set.add(authority);
+
 
         requestDto.setPassword(encoder.encode(requestDto.getPassword()));
-        memberRepository.save(requestDto.toEntity());
+        memberRepository.save(requestDto.toEntity(authority));
 
         return new MemberJoinResponseDto(requestDto.getMemId(),requestDto.getName());
     }
@@ -62,8 +61,8 @@ public class MemberService {
         String memId = authenticate.getName();
         MemberEntity member = customUserDetailsService.getMember(memId);
 
-        String accessToken = tokenProvider.createAccessToken(memId, member.getAuthorities());
-        String refreshToken = tokenProvider.createRefreshToken(memId, member.getAuthorities());
+        String accessToken = tokenProvider.createAccessToken(memId, member.getAuthority());
+        String refreshToken = tokenProvider.createRefreshToken(memId, member.getAuthority());
 
         //refresh Token 저장
         refreshTokenRepository.save(
@@ -115,8 +114,8 @@ public class MemberService {
         String memId = tokenProvider.getMemIdByToken(originAccessToken);
         MemberEntity member = customUserDetailsService.getMember(memId);
 
-        String newAccessToken = tokenProvider.createAccessToken(memId, member.getAuthorities());
-        String newRefreshToken = tokenProvider.createRefreshToken(memId, member.getAuthorities());
+        String newAccessToken = tokenProvider.createAccessToken(memId, member.getAuthority());
+        String newRefreshToken = tokenProvider.createRefreshToken(memId, member.getAuthority());
         TokenDto tokenDto = tokenProvider.createTokenDto(newAccessToken, newRefreshToken);
 
         log.debug("refresh Origin = {}",originRefreshToken);

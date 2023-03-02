@@ -13,5 +13,5 @@ public class MemberUpdateDTO {
     private String memId;
     private String password;
     private String name;
-    private List<String> authorities;
+    private String authority;
 }

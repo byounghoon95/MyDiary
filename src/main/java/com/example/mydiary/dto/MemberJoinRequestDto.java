@@ -1,5 +1,6 @@
 package com.example.mydiary.dto;
 
+import com.example.mydiary.entity.Authority;
 import com.example.mydiary.entity.MemberEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,10 +16,11 @@ public class MemberJoinRequestDto {
     private String password;
     private String name;
 
-    public MemberEntity toEntity() {
+    public MemberEntity toEntity(Authority authority) {
         return MemberEntity.builder()
                 .memId(memId)
                 .password(password)
+                .authority(authority)
                 .name(name)
                 .build();
     }

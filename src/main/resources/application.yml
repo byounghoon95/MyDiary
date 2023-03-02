@@ -29,8 +29,11 @@ logging:
 #    org.hibername.type:
 jwt:
   token:
-    secret: 123qweasd345dfdae
+    #HS256 알고리즘을 사용하기 위해, 256비트보다 커야함. 32글자 이상
+    secret: VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa
     expired-ms: 3600000 # 1시간
-    refresh-ms: 1209600000 # 24시간
+    refresh-ms: 86400000 # 24시간
 server:
   port: 8083
+swagger:
+  base-url: /api/

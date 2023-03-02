@@ -19,8 +19,6 @@ import java.util.stream.Collectors;
 @Entity
 public class MemberEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     @Column(unique = true, nullable = false, name = "member_id")
     private String memId;
     @NotNull
@@ -28,35 +26,14 @@ public class MemberEntity {
     @NotNull
     private String name;
 
-    @ManyToMany
+    @OneToOne
     @JoinTable(
             name = "member_authority",
             joinColumns = {@JoinColumn(name="member_id",referencedColumnName = "member_id")},
             inverseJoinColumns = {@JoinColumn(name = "authority_name",referencedColumnName = "authority_name")}
     )
-    private Set<Authority> authorities = new HashSet<>();
-    public void addAuthority(Authority authority) {
-        this.getAuthorities().add(authority);
-    }
-    public void removeAuthority(Authority authority) {
-        this.getAuthorities().remove(authority);
-    }
-    public String getAuthoritiesToString() {
-        return this.authorities.stream()
-                .map(Authority::getAuthorityName)
-                .collect(Collectors.joining(","));
-    }
+    private Authority authority;
 
-    public void updateMember(MemberUpdateDTO dto, PasswordEncoder passwordEncoder) {
-        if(dto.getPassword() != null) this.password = passwordEncoder.encode(dto.getPassword());
-        if(dto.getAuthorities().size() > 0) {
-            this.authorities = dto.getAuthorities().stream()
-                    .filter(MemberAuth::containsKey)
-                    .map(MemberAuth::get)
-                    .map(Authority::new)
-                    .collect(Collectors.toSet());
-        }
-    }
     public static MemberEntity of(String memId, String password, String name) {
         return new MemberEntity(memId, password, name);
     }
